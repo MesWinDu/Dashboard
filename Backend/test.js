@@ -98,7 +98,10 @@ function convertUnixTimestampToDateTime(unixTimestamp) {
 // Example usage:
 const unixTimestamp = 1700905988; // Replace with your Unix timestamp
 const formattedDateTime = convertUnixTimestampToDateTime(unixTimestamp);
-console.log(formattedDateTime);
+console.log(typeof(TyeformattedDateTime))
+const x = []
+x.push(formattedDateTime.split(' '))
+console.log(x)
 
 
 

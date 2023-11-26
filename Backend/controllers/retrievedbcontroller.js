@@ -16,6 +16,8 @@
 // }
 // }
 
+const convertUnixTimestampToDateTime = require("./Fucntions")
+
 exports.retrievedbcontroller = async (req,res) =>{
 console.log(process.env.INFLUX_BUCKET)
   const { InfluxDB } = require('@influxdata/influxdb-client');
@@ -51,17 +53,27 @@ console.log(process.env.INFLUX_BUCKET)
       //     line: ',,0,1970-01-01T00:00:00Z,2023-11-25T08:54:39.108667335Z,2023-11-22T04:24:51.790678123Z,229.8,Voltage,PowerMeter1'
       //   }
       // ];
+    
     const DateTimeFilter = []
     LinesFilter.forEach((data)=>{
       const line = data.line
-      const fields = line.split(',')
-      const lastTimestamp = fields[5]
-      if(lastTimestamp) { 
-      const SplitT = lastTimestamp.split('T')
-      const Filtered = [SplitT[0],SplitT[1].slice(0,-1)]
-      DateTimeFilter.push(Filtered)
-      }
-    }) 
+      const datetime = convertUnixTimestampToDateTime(line)
+      const SplitDateTime = datetime.split(' ')
+      DateTimeFilter.push(SplitDateTime)
+    })
+
+    // LinesFilter.forEach((data)=>{
+    //   const line = data.line
+    //   const fields = line.split(',')
+    //   const lastTimestamp = fields[5]
+    //   if(lastTimestamp) { 
+    //   const SplitT = lastTimestamp.split('T')
+    //   const Filtered = [SplitT[0],SplitT[1].slice(0,-1)]
+    //   DateTimeFilter.push(Filtered)
+    //   }
+    // }) 
+
+
       res.json(DateTimeFilter)
     },
   });
