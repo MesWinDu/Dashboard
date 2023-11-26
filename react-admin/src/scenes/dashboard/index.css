@@ -3,14 +3,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 50px;
 }
 
 .div-text {
-    padding: 50px 0px 50px 50px; 
+    padding: 50px 0px 00px 50px; 
 }
 
-.text-back{
-    text-decoration: none;
-    color:black;
-    font-size: 24px;
-}
+.hide {
+    display: none;
+  }

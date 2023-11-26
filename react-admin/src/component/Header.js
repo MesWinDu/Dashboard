@@ -14,7 +14,7 @@ const Header=(props)=>{
     return(
         <header>
             <div className="logo">
-                <span>การใช้พลังงาน</span>
+                <span>Energy Dashboard</span>
             </div>
             <div className="theme-container">
                 <span>{theme === "light" ? "โหมดกลางวัน" : "โหมดกลางคืน"}</span>
