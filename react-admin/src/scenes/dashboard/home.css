@@ -28,6 +28,12 @@
   align-items: center;
 }
 
+.sub-body{
+  display: flex;
+  width: 1670px;
+  justify-content: start;
+}
+
 img {
   margin-top: 30px;
   width: 810px;
@@ -101,4 +107,10 @@ img {
   display: block;
   color: #eee7e7;
 
+}
+
+aside{
+  width:350px;
+  left: 100px;
+  justify-content: center;
 }
