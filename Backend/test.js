@@ -46,8 +46,16 @@ async function retrieveData() {
       // Query completed
       console.log('Query completed');
       var Linesnew = Lines.slice(4,Lines.length)
-      // console.log(Linesnew);
-      console.log(Linesnew)
+      console.log(Linesnew);
+      const VoltageFiltered =[]
+      Lines.forEach((data)=>{
+        const line = data.line
+        const fields = line.split(',')
+        const VoltageValue = fields[6]
+        if(VoltageValue){
+        VoltageFiltered.push(VoltageValue)}
+      })
+      console.log(VoltageFiltered)
     },
   });
 }

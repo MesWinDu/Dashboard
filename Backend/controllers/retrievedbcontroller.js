@@ -25,6 +25,7 @@ console.log(process.env.INFLUX_BUCKET)
     url: process.env.INFLUX_URL,
     token: process.env.INFLUX_TOKEN,
   });
+  const result = {}
   const query1 = `
     from(bucket: "${process.env.INFLUX_BUCKET}")
       |> range(start: 0)
@@ -37,7 +38,7 @@ console.log(process.env.INFLUX_BUCKET)
   `;
   const timeLines = [];
   const Voltage = [];
-  const result = {}
+  
   await influxDB.getQueryApi(process.env.INFLUX_ORG).queryLines(query1, {
     next(line) {
       // Handle each row of data
@@ -63,8 +64,6 @@ console.log(process.env.INFLUX_BUCKET)
     })
     result["DateTimes"] = DateTimeFilter
     },
-    
-  
   });
   await influxDB.getQueryApi(process.env.INFLUX_ORG).queryLines(query2, {
     next(line) {
@@ -75,7 +74,7 @@ console.log(process.env.INFLUX_BUCKET)
       console.error(error);
     },
     complete() {
-      var VoltageFilter = timeLines.slice(4,timeLines.length)
+      var VoltageFilter = Voltage.slice(4,Voltage.length)
       const VoltageFiltered =[]
       VoltageFilter.forEach((data)=>{
         const line = data.line
@@ -84,9 +83,9 @@ console.log(process.env.INFLUX_BUCKET)
         if(VoltageValue){
         VoltageFiltered.push(VoltageValue)}
       })
+      console.log(Voltage)
       result["Voltage"] = VoltageFiltered
       res.json(result)
-
     },
 
 }
