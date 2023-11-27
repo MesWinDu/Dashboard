@@ -31,7 +31,7 @@ async function retrieveData() {
   const query = `
     from(bucket: "test_influx")
       |> range(start: 0)
-      |> filter(fn: (r) => r._measurement == "PowerMeter1" and r._field == "Timestamp")
+      |> filter(fn: (r) => r._measurement == "PowerMeter1" and r._field == "Voltage")
   `;
   const Lines = [];
   await influxDB.getQueryApi("253d16b9bf102ea9").queryLines(query, {
@@ -47,18 +47,7 @@ async function retrieveData() {
       console.log('Query completed');
       var Linesnew = Lines.slice(4,Lines.length)
       // console.log(Linesnew);
-      const y = []
-      Linesnew.forEach((data)=>{
-      const line = data.line
-      
-      const fields = line.split(',')
-      const lastTimestamp = fields[6]
-      console.log(lastTimestamp)
-      const datetime = convertUnixTimestampToDateTime(lastTimestamp)
-      const SplitDateTime = datetime.split(' ')
-      y.push(SplitDateTime)
-})
-  console.log(y)
+      console.log(Linesnew)
     },
   });
 }
@@ -89,24 +78,24 @@ retrieveData()
 // // console.log("Last Timestamp:", lastTimestamp);
 
 
-function convertUnixTimestampToDateTime(unixTimestamp) {
-  // Multiply by 1000 to convert seconds to milliseconds
-  const milliseconds = unixTimestamp * 1000;
-  const dateObject = new Date(milliseconds);
+// function convertUnixTimestampToDateTime(unixTimestamp) {
+//   // Multiply by 1000 to convert seconds to milliseconds
+//   const milliseconds = unixTimestamp * 1000;
+//   const dateObject = new Date(milliseconds);
 
-  // Format the date and time
-  const year = dateObject.getFullYear();
-  const month = ('0' + (dateObject.getMonth() + 1)).slice(-2);
-  const day = ('0' + dateObject.getDate()).slice(-2);
-  const hours = ('0' + dateObject.getHours()).slice(-2);
-  const minutes = ('0' + dateObject.getMinutes()).slice(-2);
-  const seconds = ('0' + dateObject.getSeconds()).slice(-2);
+//   // Format the date and time
+//   const year = dateObject.getFullYear();
+//   const month = ('0' + (dateObject.getMonth() + 1)).slice(-2);
+//   const day = ('0' + dateObject.getDate()).slice(-2);
+//   const hours = ('0' + dateObject.getHours()).slice(-2);
+//   const minutes = ('0' + dateObject.getMinutes()).slice(-2);
+//   const seconds = ('0' + dateObject.getSeconds()).slice(-2);
 
-  // Construct the formatted date and time string
-  const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+//   // Construct the formatted date and time string
+//   const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-  return formattedDateTime;
-}
+//   return formattedDateTime;
+// }
 
 // // Example usage:
 // const unixTimestamp = 1700905988; // Replace with your Unix timestamp

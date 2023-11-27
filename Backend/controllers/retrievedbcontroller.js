@@ -37,6 +37,7 @@ console.log(process.env.INFLUX_BUCKET)
   `;
   const timeLines = [];
   const Voltage = [];
+  const result = {}
   await influxDB.getQueryApi(process.env.INFLUX_ORG).queryLines(query1, {
     next(line) {
       // Handle each row of data
@@ -55,13 +56,38 @@ console.log(process.env.INFLUX_BUCKET)
       const line = data.line
       const fields = line.split(',')
       const lastTimestamp = fields[6]
+      if(lastTimestamp) { 
       const datetime = convertUnixTimestampToDateTime(lastTimestamp)
       const SplitDateTime = datetime.split(' ')
-      DateTimeFilter.push(SplitDateTime)
+      DateTimeFilter.push(SplitDateTime)}
     })
-    timeLines = DateTimeFilter
+    result["DateTimes"] = DateTimeFilter
     },
+    
+  
   });
+  await influxDB.getQueryApi(process.env.INFLUX_ORG).queryLines(query2, {
+    next(line) {
+      // Handle each row of data for query2
+      Voltage.push({ line }); // Accumulate rows for query2
+    },
+    error(error) {
+      console.error(error);
+    },
+    complete() {
+      var VoltageFilter = timeLines.slice(4,timeLines.length)
+      const VoltageFiltered =[]
+      VoltageFilter.forEach((data)=>{
+        const line = data.line
+        const fields = line.split(',')
+        const VoltageValue = fields[6]
+        if(VoltageValue){
+        VoltageFiltered.push(VoltageValue)}
+      })
+      result["Voltage"] = VoltageFiltered
+      res.json(result)
+
+    },
 
 }
  //Query completed
@@ -84,3 +110,4 @@ console.log(process.env.INFLUX_BUCKET)
     //   DateTimeFilter.push(Filtered)
     //   }
     // }) 
+  )}
