@@ -1,56 +1,56 @@
-.container {
-  background-color: #ffffff;
+.app {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
 }
 
-.container .div {
-  background-color: #ffffff;
-  height: 1080px;
-  position: relative;
-  width: 1920px;
-}
 
 .text-header {
+  text-align: center;
   color: #000000;
   font-family: "Inter-Regular", Helvetica;
   font-size: 36px;
   font-weight: 400;
-  left: 616px;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  top: 79px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
-.container .overlap-group {
-  background-color: #d9d9d9;
+.overlap-group {
+  background-color: #eee7e7;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 20px;
-  height: 844px;
-  left: 474px;
-  position: absolute;
-  top: 184px;
+  height: 780px;
   width: 972px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sub-body{
+  display: flex;
+  width: 1670px;
+  justify-content: start;
 }
 
 img {
-  height: 588px;
-  left: 70px;
-  object-fit: cover;
-  position: absolute;
-  top: 225px;
-  width: 831px;
+  margin-top: 30px;
+  width: 810px;
 }
 
-.container .overlap {
+.overlap {
   background-color: #f9f9f9;
+  border-radius: 20px;
   height: 110px;
   left: 70px;
-  position: absolute;
   top: 72px;
   width: 831px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  
 }
 
 .text-detail {
@@ -58,31 +58,59 @@ img {
   font-family: "Inter-Regular", Helvetica;
   font-size: 24px;
   font-weight: 400;
-  left: 79px;
+  left: 75px;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
   top: 39px;
 }
 
-.container .div-wrapper {
-  background-color: #d9d9d9;
+.div-wrapper {
+  background-color: #082a87;
   height: 61px;
   left: 556px;
-  position: absolute;
   top: 24px;
-  width: 237px;
+  width: 200px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 24px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.div-wrapper:hover{
+  background-color: yellow;
+  color: black;
 }
 
 .power-status {
-  color: #000000;
+  color: white;
   font-family: "Inter-Regular", Helvetica;
   font-size: 24px;
   font-weight: 400;
   left: 71px;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
   top: 15px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
+.hide {
+  display: none;
+}
+
+.div-wrapper:hover + .hide {
+  display: block;
+  color: #eee7e7;
+
+}
+
+aside{
+  width:350px;
+  left: 100px;
+  justify-content: center;
+}

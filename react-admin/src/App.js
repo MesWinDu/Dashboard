@@ -11,6 +11,8 @@ import {
 
 import Dashboard from './scenes/dashboard/index';
 import Home from './scenes/dashboard/home';
+import "bootswatch/dist/litera/bootstrap.min.css";
+import './bootstrap.min.css'
 
 function App() {
   const [theme, setTheme] = useState('light')
