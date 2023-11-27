@@ -50,7 +50,7 @@ console.log(process.env.INFLUX_BUCKET)
     },
     complete() {
 
-    var LinesFilter = timeLines.slice(4,timeLines.length)
+    var LinesFilter = timeLines.slice(4,timeLines.length-1)
     // console.log(LinesFilter)
     const DateTimeFilter = []
     LinesFilter.forEach((data)=>{
@@ -74,7 +74,7 @@ console.log(process.env.INFLUX_BUCKET)
       console.error(error);
     },
     complete() {
-      var VoltageFilter = Voltage.slice(4,Voltage.length)
+      var VoltageFilter = Voltage.slice(4,Voltage.length-1)
       const VoltageFiltered =[]
       VoltageFilter.forEach((data)=>{
         const line = data.line

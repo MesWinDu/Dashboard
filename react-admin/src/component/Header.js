@@ -16,12 +16,12 @@ const Header=(props)=>{
             <div className="logo">
                 <span>Energy Dashboard</span>
             </div>
-            <div className="theme-container">
+            {/* <div className="theme-container">
                 <span>{theme === "light" ? "โหมดกลางวัน" : "โหมดกลางคืน"}</span>
                 <span className="icon" onClick={ToggleTheme}>
                     {theme==="light"? <FaRegSun/> : <FaRegMoon/>}
                 </span>
-            </div>
+            </div> */}
         </header>
     )
 }

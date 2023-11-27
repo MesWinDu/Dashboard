@@ -8,9 +8,11 @@ import {
     Tooltip,
     Legend,
   } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
+  import { Line } from 'react-chartjs-2';
+  import { fetchData } from '../fetchData';
+  import React, { useContext } from 'react';
+  
+  ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
@@ -18,35 +20,62 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend
-);
-
-export  const options = {
-    responsive: true,
-    plugins: {
+  );
+  
+  export function LineChart() {
+    const { alldata, date, isloading, error } = useContext(fetchData);
+  
+    // Function to convert date and time pairs to formatted strings
+    const convertToDateTimeStrings = (dateTimeArray) => {
+      if (!dateTimeArray || !Array.isArray(dateTimeArray)) {
+        return [];
+      }
+  
+      return dateTimeArray.map(([date, time]) => {
+        const [year, month, day] = date.split('-').map(Number);
+        const [hours, minutes] = time.split(':').map(Number);
+  
+        // Format the date and time as per your requirement
+        const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+        return formattedDateTime;
+      });
+    };
+  
+    // Call the function to get an array of formatted date and time strings
+    const dateStringsArray = convertToDateTimeStrings(date);
+  
+    const options = {
+      responsive: true,
+      plugins: {
         legend: {
-        position: 'top' 
+          position: 'top',
         },
         title: {
-        display: true,
-        text: 'Power Consumption Line Chart',
+          display: true,
         },
-    },
-};
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-    labels,
-    datasets: [
+      },
+    };
+  
+    const data = {
+      labels: dateStringsArray,
+      datasets: [
         {
-        label: 'Dataset 1',
-        data: [1,2,3,4,5,6,7,8,9,0,1,2],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          label: 'Dataset 1',
+          data: alldata,
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
         },
-    ],
-};
-
-export function LineChart() {
+      ],
+    };
+  
+    if (isloading) {
+      return <p>Loading...</p>;
+    }
+  
+    if (error) {
+      return <p>Error: {error}</p>;
+    }
+  
     return <Line options={options} data={data} />;
-}
+  }
+  
