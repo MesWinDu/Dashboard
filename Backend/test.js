@@ -21,36 +21,49 @@
 //     }
 
 // retrievedb()
-// const { InfluxDB } = require('@influxdata/influxdb-client');
+const { InfluxDB } = require('@influxdata/influxdb-client');
 
-// async function retrieveData() {
-//   const influxDB = new InfluxDB({
-//     url: "https://eu-central-1-1.aws.cloud2.influxdata.com/",
-//     token: "aveL8vq653VXaypg3TJbwGYx-WBDldyDZrye5aS4gpCjx0tJ8kPJmxITibIAfe2b14_3UMSdIGW2bR0jtF2Qgg==",
-//   });
-//   const query = `
-//     from(bucket: "test_influx")
-//       |> range(start: 0)
-//       |> filter(fn: (r) => r._measurement == "PowerMeter1" and r._field == "Voltage")
-//   `;
-//   const Lines = [];
-//   await influxDB.getQueryApi("253d16b9bf102ea9").queryLines(query, {
-//     next(line, tableMeta) {
-//       // Handle each row of data
-//       console.log(line, tableMeta);
-//       Lines.push({ line, tableMeta }); // Accumulate rows
-//     },
-//     error(error) {
-//       console.error(error);
-//     },
-//     complete() {
-//       // Query completed
-//       console.log('Query completed');
-//       console.log('Lines:', Lines);
-//     },
-//   });
-// }
-// retrieveData();
+async function retrieveData() {
+  const influxDB = new InfluxDB({
+    url: "https://eu-central-1-1.aws.cloud2.influxdata.com/",
+    token: "aveL8vq653VXaypg3TJbwGYx-WBDldyDZrye5aS4gpCjx0tJ8kPJmxITibIAfe2b14_3UMSdIGW2bR0jtF2Qgg==",
+  });
+  const query = `
+    from(bucket: "test_influx")
+      |> range(start: 0)
+      |> filter(fn: (r) => r._measurement == "PowerMeter1" and r._field == "Timestamp")
+  `;
+  const Lines = [];
+  await influxDB.getQueryApi("253d16b9bf102ea9").queryLines(query, {
+    next(line) {
+      // Handle each row of data
+      Lines.push({ line }); // Accumulate rows
+    },
+    error(error) {
+      console.error(error);
+    },
+    complete() {
+      // Query completed
+      console.log('Query completed');
+      var Linesnew = Lines.slice(4,Lines.length)
+      // console.log(Linesnew);
+      const y = []
+      Linesnew.forEach((data)=>{
+      const line = data.line
+      
+      const fields = line.split(',')
+      const lastTimestamp = fields[6]
+      console.log(lastTimestamp)
+      const datetime = convertUnixTimestampToDateTime(lastTimestamp)
+      const SplitDateTime = datetime.split(' ')
+      y.push(SplitDateTime)
+})
+  console.log(y)
+    },
+  });
+}
+retrieveData()
+
 
 
 // const data = [
@@ -64,7 +77,7 @@
 // const fields = line.split(',');
 
 // // // Assuming the timestamp is at the 4th index (0-indexed)
-// // const lastTimestamp = fields[5];
+// const lastTimestamp = fields[5];
 
 // require('dotenv').config();
 
@@ -95,13 +108,13 @@ function convertUnixTimestampToDateTime(unixTimestamp) {
   return formattedDateTime;
 }
 
-// Example usage:
-const unixTimestamp = 1700905988; // Replace with your Unix timestamp
-const formattedDateTime = convertUnixTimestampToDateTime(unixTimestamp);
-console.log(typeof(TyeformattedDateTime))
-const x = []
-x.push(formattedDateTime.split(' '))
-console.log(x)
+// // Example usage:
+// const unixTimestamp = 1700905988; // Replace with your Unix timestamp
+// const formattedDateTime = convertUnixTimestampToDateTime(unixTimestamp);
+// const x = []
+// x.push(formattedDateTime.split(' '))
+// console.log(x)
+
 
 
 
