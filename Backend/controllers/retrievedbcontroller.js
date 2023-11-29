@@ -28,7 +28,7 @@ console.log(process.env.INFLUX_BUCKET)
   const result = {}
   const query1 = `
     from(bucket: "${process.env.INFLUX_BUCKET}")
-    |> range(start: -48h)
+    |> range(start: -24)
     |> filter(fn: (r) => r._measurement == "PowerMeter1")
     |> filter(fn: (r) => r._field == "Voltage" or r._field == "Timestamp")
     |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")`;
@@ -59,7 +59,7 @@ console.log(process.env.INFLUX_BUCKET)
   ).finally(() => {
     // Close the query API
     result["Voltage"] = Voltage
-    result["Datetimes"] = timeLines
+    result["DateTimes"] = timeLines
     res.json(result)
   });}
   //queryLines(query1, {
